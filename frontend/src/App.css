@@ -1,0 +1,48 @@
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  width: 512px;
+  height: 512px;
+  margin-bottom: 2rem;
+}
+
+.image-preview {
+  flex-grow: 1;
+  background-color: rgba(255, 255, 255, 0.6);
+  background-image: url("./upload.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.image-upload input {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+.image-upload label {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background-color: #3c147b;
+  text-align: center;
+  font-size: 3rem;
+}
+
+button {
+  cursor: pointer;
+  width: 512px;
+  height: 80px;
+  border: none;
+  background-color: #3c147b;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.btn:hover {
+  background-color: #6020c7;
+}
