@@ -78,6 +78,7 @@ const App = () => {
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
     // Load model
+    
     SceneLoader.Append(
       "http://localhost:5000/get_model/",
       "test.obj",
@@ -90,18 +91,12 @@ const App = () => {
 
   return (
     <main className="App">
-      <h1>Working Title</h1>
+      <h1>3D Surface Modeling Prediction using 2D Sketch</h1>
       <h2>Group R37 - Final Year Project</h2>
       <hr />
       <p>
         The aim of this project is to create a 3D surface mesh from a shaded 2D
-        sketch, provided as an image file by the user. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        sketch, provided as an image file by the user.
       </p>
       <div className="image-upload">
         <div className="image-preview" ref={preview}></div>

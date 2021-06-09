@@ -2,9 +2,14 @@ from flask import *
 import time
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
-import PIL.Image
+from PIL import Image
 import numpy as np
-model = tf.keras.models.load_model('model.h5', custom_objects=None, compile=True, options=None)
+import os
+import subprocess
+from datetime import datetime
+
+model = tf.keras.models.load_model('./models/model-dp.h5', custom_objects=None, compile=True, options=None)
+model_normals = tf.keras.models.load_model('./models/model-np.h5', custom_objects=None, compile=True, options=None)
 img_width = 512
 img_height = 512
 app=Flask(__name__)
@@ -59,27 +64,34 @@ def image_upload():
     # test_image = test_data.take(1)
     # print(test_image)
     for test_image in test_data.take(1):
-        prediction = model(test_image, training=False)
+        prediction = model(test_image, training=True)
+        prediction_normal = model_normals(test_image, training=True)
     # print(prediction)
-    prediction = tf.cast(prediction[0], tf.uint8)
-    print(tf.shape(prediction))
-    prediction = tf.image.encode_png(prediction)
+    # prediction = tf.cast(prediction[0], tf.uint8)
+    print(prediction[0].shape)
+    # prediction = tf.image.encode_png(prediction)
     # print(prediction)
-    tf.io.write_file('predicted_depth.png', prediction)
+    tf.keras.preprocessing.image.save_img('predicted_depth.png',prediction[0])
+    tf.keras.preprocessing.image.save_img('./model/predicted_normal.png',prediction_normal[0])
     # sess.run(writer)
     # print(type(prediction[0]))
-      
+    model_path = os.path.expanduser("./run_model.sh")
+    subprocess.call([model_path])
+    print("Model made------------")
+    print(datetime.now())
     return 'Image uploaded to server'
 
 @app.route('/get_model/<file>')
 def get_model(file):
     print(file)
     filename = './model/'+ file
+    print("Model Fetched--------------")
+    print(datetime.now())
     return send_file(filename, mimetype='application/*', cache_timeout=0)
 
 @app.route('/modelReady', methods=['GET'])
 def model_download():
-    time.sleep(2)
+    time.sleep(5)
     return 'Model is ready'
 
 if __name__ == "__main__":

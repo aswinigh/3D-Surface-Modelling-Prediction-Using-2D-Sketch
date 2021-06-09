@@ -22,7 +22,7 @@ const SceneSetup = (props) => {
         adaptToDeviceRatio
       );
       const scene = new Scene(engine, sceneOptions);
-
+      scene.useRightHandedSystem = true
       if (scene.isReady()) {
         props.onSceneReady(scene);
       } else {
