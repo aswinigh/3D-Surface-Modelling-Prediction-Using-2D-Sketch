@@ -14,6 +14,7 @@ bpy.ops.mesh.subdivide()
 bpy.ops.mesh.subdivide()
 bpy.ops.mesh.subdivide()
 bpy.ops.mesh.subdivide()
+bpy.ops.mesh.subdivide()
 bpy.ops.object.editmode_toggle()
 
 bpy.ops.object.modifier_add(type='DISPLACE')
@@ -54,10 +55,29 @@ bool_one.operation = 'DIFFERENCE'
 bpy.context.view_layer.objects.active = grid
 bpy.ops.object.modifier_apply(modifier="bool 1")
 
+triangulate = grid.modifiers.new(type="TRIANGULATE", name="triangles")
+bpy.ops.object.modifier_apply(modifier="triangles")
 # grid.modifier_apply(apply_as='DATA', modifier="bool 1")
 bpy.data.objects['Cube'].select_set(True)
 bpy.ops.object.delete()
 
+bpy.data.objects['Grid'].select_set(True)
+cloth = grid.modifiers.new(type="CLOTH", name="Cloth")
+bpy.context.object.modifiers["Cloth"].settings.effector_weights.gravity = 0
+bpy.context.object.modifiers["Cloth"].settings.use_pressure = True
+bpy.context.object.modifiers["Cloth"].settings.uniform_pressure_force = 5
+bpy.context.object.modifiers["Cloth"].settings.pressure_factor = 3
+
+# override_context = bpy.context.copy()
+
+# override_context['active_object'] = bpy.context.active_object
+# override_context['object'] = bpy.context.active_object
+# override_context['selected_objects'] = bpy.context.active_object
+# bpy.ops.ptcache.bake_all()
+depsgraph = bpy.context.evaluated_depsgraph_get()
+
+bpy.context.scene.frame_set(49)
+bpy.ops.object.modifier_apply(apply_as='DATA', modifier="Cloth")
 
 bpy.ops.export_scene.obj(filepath='./model/test.obj')
 

@@ -91,7 +91,7 @@ def get_model(file):
 
 @app.route('/modelReady', methods=['GET'])
 def model_download():
-    time.sleep(5)
+    time.sleep(9)
     return 'Model is ready'
 
 if __name__ == "__main__":
